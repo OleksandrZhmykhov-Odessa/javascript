@@ -31,11 +31,11 @@ let services = {
   }
 };
 
-// Додаємо нові послуги динамічно
+// Додаваня послуг
 services.addService("налаштування програм", 250);
 services.addService("заміна комплектуючих", 300);
 
-// Викликаємо методи
+// Щоб виклакати методи
 console.log("Список послуг:", services.list);
 console.log("Загальна вартість: " + services.price());
 console.log("Мінімальна ціна: " + services.minPrice());
