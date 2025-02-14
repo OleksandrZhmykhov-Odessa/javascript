@@ -1,74 +1,42 @@
-// Вартість послуг
 let services = {
-    "установка Windows": "200 грн",
-    "очистка компьютера": "100 грн",
-    "анти вірус": "150 грн",
-  
+  list: {
+      "установка Windows": "200 грн",
+      "очистка компьютера": "100 грн",
+      "анти вірус": "150 грн"
+  },
 
-    price: function() {
-      let total = 0;
-      for (let service in this) {
-        if (typeof this[service] === "string" && this[service].includes("грн")) {
-          total += parseInt(this[service]); 
-        }
-      }
-      return total + " грн"; 
-    }
-  };
-  
-  
-  services["налаштування програм"] = "250 грн";
-  services["заміна комплектуючих"] = "300 грн";
-  
+  //  Загальна вартость послуг
+  price: function() {
+      let total = Object.values(this.list)
+          .map(price => parseInt(price))
+          .reduce((sum, price) => sum + price, 0);
+      return total + " грн";
+  },
 
-  console.log("Загальна вартість послуг: " + services.price());
+  //  Мінімальна ціна серед послуг
+  minPrice: function() {
+      let prices = Object.values(this.list).map(price => parseInt(price));
+      return prices.length > 0 ? Math.min(...prices) + " грн" : "Послуг немає";
+  },
 
-//Мінімальна ціна
-  let services = {
-    "установка Windows": "200 грн",
-    "очистка компьютера": "100 грн",
-    "анти вірус": "150 грн",
-  
-   
-    minPrice: function() {
-      let prices = [];
-      for (let service in this) {
-        if (typeof this[service] === "string" && this[service].includes("грн")) {
-          prices.push(parseInt(this[service])); 
-        }
-      }
-      return prices.length > 0 ? Math.min(...prices) + " грн" : "Послуг немає"; 
-    }
-  };
-  
-  
-  services["налаштування програм"] = "250 грн";
-  services["заміна комплектуючих"] = "300 грн";
-  
-  
-  console.log("Мінімальна ціна послуги: " + services.minPrice());
+  //  Максимальна ціна серед послуг
+  maxPrice: function() {
+      let prices = Object.values(this.list).map(price => parseInt(price));
+      return prices.length > 0 ? Math.max(...prices) + " грн" : "Послуг немає";
+  },
 
-//Максимальна ціна
-  let services = {
-    "установка Windows": "200 грн",
-    "очистка компьютера": "100 грн",
-    "анти вірус": "150 грн",
-  
-    
-    maxPrice: function() {
-      let prices = []; 
-      for (let service in this) {
-        if (typeof this[service] === "string" && this[service].includes("грн")) {
-          prices.push(parseInt(this[service])); 
-        }
-      }
-      return prices.length > 0 ? Math.max(...prices) + " грн" : "Послуг немає"; 
-    }
-  };
-  
-  
-  services["налаштування програм"] = "250 грн";
-  services["заміна комплектуючих"] = "300 грн";
-  
-  
-  console.log("Максимальна ціна послуги: " + services.maxPrice());
+  //  Додавання нових послуг
+  addService: function(name, price) {
+      this.list[name] = price + " грн";
+  }
+};
+
+// Додаємо нові послуги динамічно
+services.addService("налаштування програм", 250);
+services.addService("заміна комплектуючих", 300);
+
+// Викликаємо методи
+console.log("Список послуг:", services.list);
+console.log("Загальна вартість: " + services.price());
+console.log("Мінімальна ціна: " + services.minPrice());
+console.log("Максимальна ціна: " + services.maxPrice());
